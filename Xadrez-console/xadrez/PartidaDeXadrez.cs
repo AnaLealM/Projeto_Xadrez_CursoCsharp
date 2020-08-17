@@ -33,7 +33,30 @@ namespace xadrez
             executaMovimento(origem, destino);
             turno++;
             mudaJogador();
-            mudaJogador();
+        }
+
+        public void validarPosicaoDeOrigem(Posicao pos)
+        {
+            if (tab.peca(pos) == null)
+            {
+                throw new TabuleiroException("Não existe peça na posição de origem escolhida");
+            }
+            if (jogadorAtual != tab.peca(pos).cor)
+            {
+                throw new TabuleiroException("A peça de origem escolhida não é sua!");
+            }
+            if (!tab.peca(pos).existeMovimentosPossiveis())
+            {
+                throw new TabuleiroException("não há movimentos possiveis para a peça de origem escolhida!");
+            }
+        }
+
+        public void validarPosicaoDeDestino(Posicao origem, Posicao destino)
+        {
+            if (!tab.peca(origem).podeMoverPara(destino))
+            {
+                throw new TabuleiroException("Posicao de destino invalida!");
+            }
         }
 
         private void mudaJogador()
